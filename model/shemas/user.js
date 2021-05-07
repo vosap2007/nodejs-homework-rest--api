@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const {Schema, model, SchemaTypes} = mongoose
+const gravatar = require('gravatar')
 const {Subscription} = require('../../helper/constans') 
 const bcrypt = require('bcryptjs')
  
@@ -27,6 +28,13 @@ const userSchema = new Schema ({
     token: {
       type: String,
       default: null,
+    },
+    avatar: {
+      type: String, 
+      default: function () {
+        return gravatar.url(this.email, { s: '250'}, true)
+      },
+      
     },
     owner: {
         type: SchemaTypes.ObjectId,
