@@ -3,6 +3,7 @@ const {Schema, model, SchemaTypes} = mongoose
 const gravatar = require('gravatar')
 const {Subscription} = require('../../helper/constans') 
 const bcrypt = require('bcryptjs')
+const { nanoid } = require('nanoid')
  
 const userSchema = new Schema ({
     password: {
@@ -34,7 +35,15 @@ const userSchema = new Schema ({
       default: function () {
         return gravatar.url(this.email, { s: '250'}, true)
       },
-      
+      verify: {
+        type: Boolean,
+        default: false,
+      },
+      verifyTokenEmail: {
+        type: String,
+        required: true,
+        default: nanoid(),
+      },
     },
     owner: {
         type: SchemaTypes.ObjectId,
